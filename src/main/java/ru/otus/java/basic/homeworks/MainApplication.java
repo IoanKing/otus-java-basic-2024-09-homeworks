@@ -46,9 +46,9 @@ public class MainApplication {
         int data = 21;
         if (data <= 10) {
             System.out.println("Красный");
-        } if (data > 10 && data <= 20) {
+        } else if (data > 10 && data <= 20) {
             System.out.println("Желтый");
-        } if (data > 20) {
+        } else if (data > 20) {
             System.out.println("Зелёный");
         }
     }
