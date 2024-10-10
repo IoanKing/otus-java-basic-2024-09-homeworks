@@ -12,7 +12,7 @@ public class MainApplication {
                 greetings();
                 break;
             case 2:
-                checkSign(1,2,-4);
+                checkSign(getRandomInt(-100, 100),getRandomInt(-100, 100),getRandomInt(-100, 100));
                 break;
             case 3:
                 selectColor();
@@ -21,7 +21,7 @@ public class MainApplication {
                 compareNumbers();
                 break;
             default:
-                addOrSubtractAndPrint(1,2,false);
+                addOrSubtractAndPrint(getRandomInt(0, 10), getRandomInt(1, 10), getRandomBoolean());
                 break;
         }
     }
@@ -36,40 +36,46 @@ public class MainApplication {
     public static void checkSign(int a, int b, int c) {
         int sum = a + b + c;
         if (sum >= 0) {
-            System.out.println("Сумма положительная");
+            System.out.println("Сумма положительная [" + a + " + " + b + " + " + c + " = " + sum +"]");
         } else {
-            System.out.println("Сумма отрицательная");
+            System.out.println("Сумма отрицательная [" + a + " + " + b + " + " + c + " = " + sum + "]");
         }
     }
 
     public static void selectColor() {
-        int data = 21;
+        int data = getRandomInt(0, 30);
         if (data <= 10) {
-            System.out.println("Красный");
+            System.out.println("Красный [" + data + " <= 10]");
         } else if (data > 10 && data <= 20) {
-            System.out.println("Желтый");
+            System.out.println("Желтый [10 > " + data + " <= 20]");
         } else if (data > 20) {
-            System.out.println("Зелёный");
+            System.out.println("Зелёный [20 > " + data + "]");
         }
     }
 
     public static void compareNumbers() {
-        int a = 4;
-        int b = 2;
+        int a = getRandomInt(-100, 100);
+        int b = getRandomInt(-100, 100);
         if (a >= b) {
-            System.out.println("a >= b");
+            System.out.println("a >= b [" + a + " >= " + b + "]");
         } else {
-            System.out.println("a < b");
+            System.out.println("a < b [" + a + " < " + b + "]");
         }
     }
 
     public static void addOrSubtractAndPrint(int initValue, int delta, boolean increment) {
-        int result;
         if (increment) {
-            result = initValue + delta;
+            System.out.println((initValue + delta) + " [" + initValue + " + " + delta + " | " + increment + "]");
         } else {
-            result = initValue - delta;
+            System.out.println((initValue - delta) + " [" + initValue + " - " + delta + " | " + increment + "]");
         }
-        System.out.println(result);
+    }
+
+    public static int getRandomInt (int min, int max) {
+        return min + (int) (Math.random() * (max - min));
+    }
+
+    public static boolean getRandomBoolean() {
+        return Math.random() < 0.5;
     }
 }
