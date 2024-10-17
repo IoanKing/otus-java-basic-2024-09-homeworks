@@ -68,37 +68,55 @@ public class MainApplication {
         }
     }
 
-    //Метод печатающий в консоль строку указанное количество раз
+    /**
+     * Метод печатающий в консоль строку указанное количество раз
+     * @param count - количество повторений
+     * @param str - строка для печати
+     */
     public static void arrayPrintNTimes(int count, String str) {
         for (int i = 0; i < count; i++) {
             System.out.println((i + 1) + " - " + str);
         }
     }
 
-    //Метод суммирующий все элементы, значение которых больше 5, и печатающий полученную сумму в консоль
-    public static void sumArrayElementsMoreFive(int[] checkedArray) {
+    /**
+     * Метод суммирующий все элементы, значение которых больше 5, и печатающий полученную сумму в консоль
+     * @param arr - ссылка на обрабатываемый массив
+     */
+    public static void sumArrayElementsMoreFive(int[] arr) {
         int summ = 0;
-        for (int i = 0; i < checkedArray.length; i++) {
-            if (checkedArray[i] > 5) {
-                summ += checkedArray[i];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > 5) {
+                summ += arr[i];
             }
         }
         System.out.println(summ);
     }
 
-    //Метод заполняющий каждую ячейку массива указанным числом
-    public static void fillArrayBySelectedNumber(int count, int[] arr) {
-        Arrays.fill(arr, count);
+    /**
+     * Метод заполняющий каждую ячейку массива указанным числом
+     * @param fillNumber - число заполнитель
+     * @param arr - ссылка на обрабатываемый массив
+     */
+    public static void fillArrayBySelectedNumber(int fillNumber, int[] arr) {
+        Arrays.fill(arr, fillNumber);
     }
 
-    //Метод увеличивающий значение каждой ячейки на указанное число
+    /**
+     * Метод увеличивающий значение каждой ячейки на указанное число
+     * @param incNumber - число на которое требуется увличить элементы массива
+     * @param arr - ссылка на обрабатываемый массив
+     */
     public static void incArrayElementsBySelectedNumber(int incNumber, int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             arr[i] += incNumber;
         }
     }
 
-    //Метод печатающий в консоль сумма элементов какой из половин массива больше.
+    /**
+     * Метод печатающий в консоль сумма элементов какой из половин массива больше.
+     * @param arr - ссылка на обрабатываемый массив
+     */
     public static void halfSumArrayElementGreater(int[] arr) {
         int arrayLeftSum = sumArrayElements(arr, 0,arr.length/2);
         int arrayRightSum = sumArrayElements(arr, arr.length/2,arr.length-1);
@@ -113,14 +131,25 @@ public class MainApplication {
 
     //Вспомогательные методы
 
-    //Метод заполняющий массив случайными числами
+    /**
+     * Метод заполняющий массив случайными числами
+     * @param arr - ссылка на обрабатываемый массив
+     * @param minValue - нижняя граница диапазона случайного числа
+     * @param maxValue - верзняя граница диапазона случайного числа
+     */
     public static void getArrayRandomValues (int[] arr, int minValue, int maxValue) {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = getRandomInt(minValue, maxValue);
         }
     }
 
-    //Метод складывающий элементы массива
+    /**
+     * Метод складывающий элементы массива в заданном диапазоне индекса
+     * @param arr - ссылка на обрабатываемый массив
+     * @param startIndex - началный индекс массива
+     * @param endIndex - конечный индекс массива
+     * @return (int) - Сумма элементов в задданом диапазоне индексов массива
+     */
     public static int sumArrayElements(int[] arr, int startIndex, int endIndex) {
         int sum = 0;
         for (int i = startIndex; i < endIndex; i++) {
@@ -129,7 +158,12 @@ public class MainApplication {
         return sum;
     }
 
-    //Метод генерирующий случайное целое число в заданном диапазоне
+    /**
+     * Метод генерирующий случайное целое число в заданном диапазоне
+     * @param min - нижняя граница диапазона
+     * @param max - верхняя граница диапазона
+     * @return (int) - случайное число внутри указанного диапазона
+     */
     public static int getRandomInt (int min, int max) {
         return min + (int) (Math.random() * (max - min));
     }
