@@ -38,8 +38,8 @@ public class MainApplication {
             case 2:
                 arr = new int[MIN_ARR_SIZE];
                 System.out.println("Задание: Сумма всех элементов, значение которых больше 5");
-                System.out.println("Массив: " + Arrays.toString(arr));
                 getArrayRandomValues(arr, MIN_INT_VALUE, MAX_INT_VALUE);
+                System.out.println("Массив: " + Arrays.toString(arr));
                 sumArrayElementsMoreFive(arr);
                 break;
             case 3:
@@ -94,9 +94,18 @@ public class MainApplication {
             case 8:
                 int[] checkedArray2 = {6, 5, 4, 3, 2, 1};
                 boolean isArraySorted = false;
+                boolean isSortABC;
                 System.out.println("Задание: Проверка, что все элементы массива идут в порядке убывания или возрастания (по выбору пользователя)");
                 System.out.println("Исходный массив: " + Arrays.toString(checkedArray2));
-                isArraySorted = checkSortArray(checkedArray2);
+                do {
+                    System.out.println("Выберите сортировку 1 - по возрастанию, 2 - по убыванию");
+                    selectedMethod = scanner.nextInt();
+                    if (selectedMethod == 1 || selectedMethod == 2) {
+                        isSortABC = selectedMethod == 1;
+                        break;
+                    }
+                } while (true);
+                isArraySorted = checkSortArray(checkedArray2, isSortABC);
                 if (isArraySorted) {
                     System.out.println("Массив отсортирован");
                 } else {
@@ -195,37 +204,30 @@ public class MainApplication {
     /**
      * Метод проверяющий, что в массиве есть точка, где сумма элементов левой части от точки равна сумме элементов справа от точки
      * @param arr - ссылка на массив
-     * @return isPointExist - true/false
+     * @return boolean - в массиве имеется точка (true|false)
      */
     public static boolean checkPointSumElementOfArray(int[] arr) {
-        boolean isPointExist = false;
+        int sumLeftPartOfArray;
+        int sumRightPartOfArray;
         for (int i = 1; i < arr.length; i++) {
-            System.out.println("Сравнение: " + sumArrayElements(arr, 0, i) + " и " + sumArrayElements(arr, i, arr.length));
-            if (sumArrayElements(arr, 0, i) == sumArrayElements(arr, i, arr.length)) {
-                isPointExist = true;
-                break;
+            sumLeftPartOfArray = sumArrayElements(arr, 0, i);
+            sumRightPartOfArray = sumArrayElements(arr, i, arr.length);
+            System.out.println("Сравнение: " + sumLeftPartOfArray + " и " + sumRightPartOfArray);
+            if (sumLeftPartOfArray == sumRightPartOfArray) {
+                return true;
             }
         }
-        return isPointExist;
+        return false;
     }
 
     /**
      * Метод проверяющий, что все элементы массива идут в порядке убывания или возрастания (по выбору пользователя)
-     * @param arr - ссылка на массив
-     * @return isSorted
+     * @param arr  - ссылка на массив
+     * @param isSortOrderABC  - сортировка по возрастанию или по убыванию (true|false)
+     * @return boolean - элементы массива отсортированы по выбранному направлению сортировки (true|false)
      */
-    public static boolean checkSortArray(int[] arr) {
-        boolean isSelectSortType = false;
-        Scanner scanner = new Scanner(System.in);
-        int selectedMethod = 0;
-        do {
-            System.out.println("Выберите сортировку 1 - по возрастанию, 2 - по убыванию");
-            selectedMethod = scanner.nextInt();
-            if (selectedMethod == 1 || selectedMethod == 2) {
-                isSelectSortType = true;
-            }
-        } while (!isSelectSortType);
-        if (selectedMethod == 1) {
+    public static boolean checkSortArray(int[] arr, boolean isSortOrderABC) {
+        if (isSortOrderABC) {
             for (int i = 0; i < arr.length-1; i++) {
                 if (arr[i] >= arr[i+1]) {
                     return false;
