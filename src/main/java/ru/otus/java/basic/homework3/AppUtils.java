@@ -19,7 +19,7 @@ public class AppUtils {
      * @param minValue - нижняя граница диапазона случайного числа
      * @param maxValue - верхняя граница диапазона случайного числа
      */
-    public static void fillTwoDimensionalArrayRandomValues (int[][] arr, int minValue, int maxValue) {
+    public static void fillArrayRandomValues (int[][] arr, int minValue, int maxValue) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
                 arr[i][j] = getRandomInt(minValue, maxValue);
@@ -31,7 +31,7 @@ public class AppUtils {
      * Метод печатающий двумерный массив отдельными строчками
      * @param arr - ссылка на двумерный массив
      */
-    public static void printTwoDimensionalArray(int[][] arr) {
+    public static void printArrayInConsole(int[][] arr) {
         for (int[] i : arr) {
             System.out.println(Arrays.toString(i));
         }

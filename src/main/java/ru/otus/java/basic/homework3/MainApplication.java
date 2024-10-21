@@ -32,9 +32,9 @@ public class MainApplication {
             case 1:
                 int sumOfPositiveElements = 0;
                 tdArray = new int[arraySizeVertical][arraySizeHorizontal];
-                AppUtils.fillTwoDimensionalArrayRandomValues(tdArray, MIN_INT_VALUE, MAX_INT_VALUE);
+                AppUtils.fillArrayRandomValues(tdArray, MIN_INT_VALUE, MAX_INT_VALUE);
                 System.out.println("Сгенерированный массив:");
-                AppUtils.printTwoDimensionalArray(tdArray);
+                AppUtils.printArrayInConsole(tdArray);
                 sumOfPositiveElements = sumOfPositiveElements(tdArray);
                 System.out.println("Сумма всех положительных элементов массива = " + sumOfPositiveElements);
                 break;
@@ -52,9 +52,9 @@ public class MainApplication {
             case 3:
                 int diagonalVector = 0;
                 tdArray = new int[arraySizeVertical][arraySizeHorizontal];
-                AppUtils.fillTwoDimensionalArrayRandomValues(tdArray, MIN_INT_VALUE, MAX_INT_VALUE);
+                AppUtils.fillArrayRandomValues(tdArray, MIN_INT_VALUE, MAX_INT_VALUE);
                 System.out.println("Сгенерированный массив:");
-                AppUtils.printTwoDimensionalArray(tdArray);
+                AppUtils.printArrayInConsole(tdArray);
                 do {
                     System.out.println("Выберите диагональ для обнуления (1 - левая, 2 - правая, 3 - обе):");
                     diagonalVector = scanner.nextInt();
@@ -64,23 +64,23 @@ public class MainApplication {
                 } while(true);
                 diagonalElementsZero(tdArray, diagonalVector);
                 System.out.println("Новый массив");
-                AppUtils.printTwoDimensionalArray(tdArray);
+                AppUtils.printArrayInConsole(tdArray);
                 break;
             case 4:
                 int maxElement = 0;
                 tdArray = new int[arraySizeVertical][arraySizeHorizontal];
-                AppUtils.fillTwoDimensionalArrayRandomValues(tdArray, MIN_INT_VALUE, MAX_INT_VALUE);
+                AppUtils.fillArrayRandomValues(tdArray, MIN_INT_VALUE, MAX_INT_VALUE);
                 System.out.println("Сгенерированный массив:");
-                AppUtils.printTwoDimensionalArray(tdArray);
+                AppUtils.printArrayInConsole(tdArray);
                 maxElement = findMax(tdArray);
                 System.out.println("Максимальный элемент в массиве: " + maxElement);
                 break;
             case 5:
                 int sum = 0;
                 tdArray = new int[arraySizeVertical][arraySizeHorizontal];
-                AppUtils.fillTwoDimensionalArrayRandomValues(tdArray, MIN_INT_VALUE, MAX_INT_VALUE);
+                AppUtils.fillArrayRandomValues(tdArray, MIN_INT_VALUE, MAX_INT_VALUE);
                 System.out.println("Сгенерированный массив:");
-                AppUtils.printTwoDimensionalArray(tdArray);
+                AppUtils.printArrayInConsole(tdArray);
                 sum = getSumSecondRow(tdArray);
                 System.out.println("Сумма элементов = " + sum);
                 break;
@@ -95,13 +95,13 @@ public class MainApplication {
      * @return int
      */
     public static int sumOfPositiveElements(int[][] arr) {
-        int sumOfPositiveElements = 0;
+        int sum = 0;
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
-                sumOfPositiveElements += Math.max(arr[i][j], 0);
+                sum += Math.max(arr[i][j], 0);
             }
         }
-        return sumOfPositiveElements;
+        return sum;
     }
 
     /**
