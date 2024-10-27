@@ -3,6 +3,11 @@ package ru.otus.java.basic.homework3;
 import java.util.Arrays;
 
 public class AppUtils {
+    final static int MIN_INT_VALUE = -9;
+    final static int MAX_INT_VALUE = 9;
+    final static int MIN_ARR_SIZE = 2;
+    final static int MAX_ARR_SIZE = 6;
+
     /**
      * Метод генерирующий случайное целое число в заданном диапазоне
      * @param min - нижняя граница диапазона
@@ -15,16 +20,17 @@ public class AppUtils {
 
     /**
      * Метод заполняющий двумерный массив случайными числами
-     * @param arr - ссылка на обрабатываемый двумерный массив
-     * @param minValue - нижняя граница диапазона случайного числа
-     * @param maxValue - верхняя граница диапазона случайного числа
      */
-    public static void fillArrayRandomValues (int[][] arr, int minValue, int maxValue) {
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[0].length; j++) {
-                arr[i][j] = getRandomInt(minValue, maxValue);
+    public static int[][] fillArrayRandomValues () {
+        int arraySizeVertical = AppUtils.getRandomInt(MIN_ARR_SIZE + 1, MAX_ARR_SIZE);
+        int arraySizeHorizontal = AppUtils.getRandomInt(MIN_ARR_SIZE + 1, MAX_ARR_SIZE);
+        int[][] array = new int[arraySizeVertical][arraySizeHorizontal];
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[0].length; j++) {
+                array[i][j] = getRandomInt(MIN_INT_VALUE, MAX_INT_VALUE);
             }
         }
+        return array;
     }
 
     /**

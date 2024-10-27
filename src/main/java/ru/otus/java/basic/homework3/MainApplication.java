@@ -6,20 +6,14 @@ import java.util.Scanner;
 
 public class MainApplication {
     public static void main(String[] args) {
-        final int MIN_INT_VALUE = -9;
-        final int MAX_INT_VALUE = 9;
-        final int MIN_ARR_SIZE = 2;
-        final int MAX_ARR_SIZE = 6;
-
         int[][] generatedArray;
-        int arraySizeVertical;
-        int arraySizeHorizontal;
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("===== Домашнее задание. Лекция №7 ============================");
         System.out.println("=== (!) все значения в задания генерируются автоматически ====");
         System.out.println("=== (!) Для каждого задания генерируется новый массив     ====");
+
         int command;
         do {
             System.out.println("==============================================================\n"+
@@ -31,13 +25,10 @@ public class MainApplication {
                     "5 - Сумма элементов второй строки\n" +
                     "6 - Выйти");
             command = scanner.nextInt();
-            arraySizeVertical = AppUtils.getRandomInt(MIN_ARR_SIZE + 1, MAX_ARR_SIZE);
-            arraySizeHorizontal = AppUtils.getRandomInt(MIN_ARR_SIZE + 1, MAX_ARR_SIZE);
-            switch (command) {
+              switch (command) {
                 case 1:
                     int sumOfPositiveElements = 0;
-                    generatedArray = new int[arraySizeVertical][arraySizeHorizontal];
-                    AppUtils.fillArrayRandomValues(generatedArray, MIN_INT_VALUE, MAX_INT_VALUE);
+                    generatedArray = AppUtils.fillArrayRandomValues();
                     System.out.println("Сгенерированный массив:");
                     AppUtils.printArrayInConsole(generatedArray);
                     sumOfPositiveElements = sumOfPositiveElements(generatedArray);
@@ -56,8 +47,7 @@ public class MainApplication {
                     break;
                 case 3:
                     int diagonalVector = 0;
-                    generatedArray = new int[arraySizeVertical][arraySizeHorizontal];
-                    AppUtils.fillArrayRandomValues(generatedArray, MIN_INT_VALUE, MAX_INT_VALUE);
+                    generatedArray = AppUtils.fillArrayRandomValues();
                     System.out.println("Сгенерированный массив:");
                     AppUtils.printArrayInConsole(generatedArray);
                     do {
@@ -73,8 +63,7 @@ public class MainApplication {
                     break;
                 case 4:
                     int maxElement = 0;
-                    generatedArray = new int[arraySizeVertical][arraySizeHorizontal];
-                    AppUtils.fillArrayRandomValues(generatedArray, MIN_INT_VALUE, MAX_INT_VALUE);
+                    generatedArray = AppUtils.fillArrayRandomValues();
                     System.out.println("Сгенерированный массив:");
                     AppUtils.printArrayInConsole(generatedArray);
                     maxElement = findMax(generatedArray);
@@ -82,8 +71,7 @@ public class MainApplication {
                     break;
                 case 5:
                     int sum = 0;
-                    generatedArray = new int[arraySizeVertical][arraySizeHorizontal];
-                    AppUtils.fillArrayRandomValues(generatedArray, MIN_INT_VALUE, MAX_INT_VALUE);
+                    generatedArray = AppUtils.fillArrayRandomValues();
                     System.out.println("Сгенерированный массив:");
                     AppUtils.printArrayInConsole(generatedArray);
                     sum = getSumSecondRow(generatedArray);
@@ -129,28 +117,22 @@ public class MainApplication {
      * @param diagonal направление диагонали (1 - левая, 2 - правая, 3 - обе)
      */
     public static void diagonalElementsZero(int[][] arr, int diagonal) {
-        int leftIndex = 0;
-        int rightIndex = arr[0].length-1;
         int checkedSize = Math.min(arr.length, arr[0].length);
         switch (diagonal) {
             case 1:
                 for (int i = 0; i < checkedSize; i++) {
-                    arr[i][leftIndex] = 0;
-                    leftIndex++;
+                    arr[i][i] = 0;
                 }
                 break;
             case 2:
                 for (int i = 0; i < checkedSize; i++) {
-                    arr[i][rightIndex] = 0;
-                    rightIndex--;
+                    arr[i][arr[0].length - i - 1] = 0;
                 }
                 break;
             case 3:
                 for (int i = 0; i < checkedSize; i++) {
-                    arr[i][leftIndex] = 0;
-                    arr[i][rightIndex] = 0;
-                    leftIndex++;
-                    rightIndex--;
+                    arr[i][i] = 0;
+                    arr[i][arr[0].length - i - 1] = 0;
                 }
                 break;
             default:
@@ -164,7 +146,7 @@ public class MainApplication {
      * @return int
      */
     public static int findMax(int[][] arr) {
-        int maxResult = -1;
+        int maxResult = arr[0][0];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 maxResult = Math.max(maxResult, arr[i][j]);
