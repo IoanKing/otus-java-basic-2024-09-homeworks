@@ -47,26 +47,28 @@ public abstract class Animal {
         if (groundSpeed <= 0) {
             return -1;
         }
-        if (endurance < distance * groundSpeed) {
+        int time = distance * groundSpeed;
+        if (endurance < time) {
             isTired = true;
             endurance = 0;
             return -1;
         }
-        endurance -= distance * groundSpeed;
-        return distance;
+        endurance -= time;
+        return time;
     }
 
     public int swim(int distance) {
         if (waterSpeed <= 0) {
             return -1;
         }
-        if (endurance < distance * waterSpeed) {
+        int time = distance * waterSpeed;
+        if (endurance < time) {
             isTired = true;
             endurance = 0;
             return -1;
         }
-        endurance -= distance * waterSpeed;
-        return distance;
+        endurance -= time;
+        return time;
     }
 
     @Override
