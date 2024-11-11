@@ -1,4 +1,4 @@
-package ru.otus.java.basic.homework11;
+package ru.otus.java.basic.homework11.mock;
 
 import java.util.Random;
 

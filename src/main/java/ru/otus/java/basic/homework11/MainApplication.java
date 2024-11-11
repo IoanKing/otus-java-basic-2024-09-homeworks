@@ -1,16 +1,24 @@
 package ru.otus.java.basic.homework11;
 
+import ru.otus.java.basic.homework11.animals.Animal;
+import ru.otus.java.basic.homework11.animals.Cat;
+import ru.otus.java.basic.homework11.animals.Dog;
+import ru.otus.java.basic.homework11.animals.Horse;
+import ru.otus.java.basic.homework11.mock.MockData;
+
 import java.util.Scanner;
 
 public class MainApplication {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("====================================");
         System.out.println("== Домашнее задание по лекции №11 ==");
         System.out.println("====================================");
-        Cat cat = new Cat(MockData.getRandomName());
-        Dog dog = new Dog(MockData.getRandomName());
-        Horse horse = new Horse(MockData.getRandomName());
+
+        Cat cat = new Cat(MockData.getRandomName(), 1, -1, 100);
+        Dog dog = new Dog(MockData.getRandomName(), 1, 2, 100);
+        Horse horse = new Horse(MockData.getRandomName(), 1, 4, 100);
+
+        Scanner scanner = new Scanner(System.in);
 
         int command = 0;
         do {
@@ -26,10 +34,10 @@ public class MainApplication {
                     getAnimalsInfo(cat, dog, horse);
                     break;
                 case 2:
-                    movementAnimals(true, cat, dog, horse);
+                    runAnimals(cat, dog, horse);
                     break;
                 case 3:
-                    movementAnimals(false, cat, dog, horse);
+                    swimAnimals(cat, dog, horse);
                     break;
                 case 4:
                     resetAnimalEndurance(cat, dog, horse);
@@ -42,7 +50,7 @@ public class MainApplication {
      * Метод восстанавливает endurance на начальное значение.
      * @param animals объекты с животными через запятую.
      */
-    private static void resetAnimalEndurance(Animal ... animals) {
+    private static void resetAnimalEndurance(Animal... animals) {
         for (Animal animal : animals) {
             System.out.println("\"" + animal.getName() + "\" восстановил силы.");
             animal.resetStatus();
@@ -50,53 +58,47 @@ public class MainApplication {
     }
 
     /**
-     * Метод рассчитывает время перемещения на указанную дистанцию. При перемещении тратиться endurance.
-     * @param isRun тип перемещения (true - бег, false - плаванье)
+     * Метод рассчитывает время бега на указанную дистанцию. При перемещении тратиться endurance.
      * @param animals объекты с животными через запятую.
      */
-    private static void movementAnimals(boolean isRun, Animal ... animals) {
+    private static void runAnimals(Animal ... animals) {
         Scanner scanner = new Scanner(System.in);
         int distance = 0;
-        int time = 0;
-        String[][] MOVEMENT_TEXT = {
-                {"бега", "бегать", "пробежать", "пробежало"},
-                {"плавания", "плавать", "проплыть", "проплыло"},
-        };
-        int textIndex = isRun ? 0 : 1;
-        do {
-            System.out.println("\nВведите дистанцию "  + MOVEMENT_TEXT[textIndex][0] + " (от 0 до 10):");
-            distance = scanner.nextInt();
+        System.out.println("----");
+        System.out.println("Введите дистанцию (больше нуля):");
+        distance = scanner.nextInt();
 
-            if (distance >= 0 && distance <= 10) {
-                for (Animal animal : animals) {
-                    if (isRun) {
-                        if (!animal.isCanRun()) {
-                            System.out.println(animal.getType() + " \"" + animal.getName() + "\" не умеет " + MOVEMENT_TEXT[textIndex][1] + ".");
-                            continue;
-                        }
-                        time = animal.run(distance);
-                        System.out.print(animal.getType() + " \"" + animal.getName() + "\" ");
-                        if (time < 0) {
-                            System.out.println(" не смогло "+ MOVEMENT_TEXT[textIndex][2] + " дистанцию. Устало.");
-                            continue;
-                        }
-                        System.out.println(MOVEMENT_TEXT[textIndex][3] + " " + distance + " метров за " + time + " секунд.");
-                    } else {
-                        if (!animal.isCanSwim()) {
-                            System.out.println(animal.getType() + " \"" + animal.getName() + "\" не умеет " + MOVEMENT_TEXT[textIndex][1] + ".");
-                            continue;
-                        }
-                        time = animal.swim(distance);
-                        System.out.print(animal.getType() + " \"" + animal.getName() + "\" ");
-                        if (time < 0) {
-                            System.out.println(" не смогло "+ MOVEMENT_TEXT[textIndex][2] + " дистанцию. Устало.");
-                            continue;
-                        }
-                        System.out.println(MOVEMENT_TEXT[textIndex][3] + " " + distance + "метров за " + time + " секунд.");
-                    }
-                }
+        for (Animal animal : animals) {
+            int runDistance = animal.run(distance);
+            String status = animal.isTired() ? "Устал" : "";
+            if (runDistance < 0) {
+                System.out.println(animal.getType() + " \"" + animal.getName() + "\" не смог пройти дистанцию. " + status);
+                continue;
             }
-        } while (distance < 0 || distance > 10);
+            System.out.println(animal.getType() + " \"" + animal.getName() + "\" пробежал дистанцию за " + runDistance);
+        }
+    }
+
+    /**
+     * Метод рассчитывает время бега на указанную дистанцию. При перемещении тратиться endurance.
+     * @param animals объекты с животными через запятую.
+     */
+    private static void swimAnimals(Animal ... animals) {
+        Scanner scanner = new Scanner(System.in);
+        int distance = 0;
+        System.out.println("----");
+        System.out.println("Введите дистанцию (больше нуля):");
+        distance = scanner.nextInt();
+
+        for (Animal animal : animals) {
+            int runDistance = animal.swim(distance);
+            String status = animal.isTired() ? "Устало" : "";
+            if (runDistance < 0) {
+                System.out.println(animal.getType() + " \"" + animal.getName() + "\" не смог проплыть дистанцию. " + status);
+                continue;
+            }
+            System.out.println(animal.getType() + " \"" + animal.getName() + "\" проплыл дистанцию за " + runDistance);
+        }
     }
 
     /**
