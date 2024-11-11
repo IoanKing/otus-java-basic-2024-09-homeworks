@@ -66,7 +66,9 @@ public class MainApplication {
         int distance = 0;
         System.out.println("----");
         System.out.println("Введите дистанцию (больше нуля):");
-        distance = scanner.nextInt();
+        do {
+            distance = scanner.nextInt();
+        } while (distance <= 0);
 
         for (Animal animal : animals) {
             int runDistance = animal.run(distance);
@@ -88,7 +90,9 @@ public class MainApplication {
         int distance = 0;
         System.out.println("----");
         System.out.println("Введите дистанцию (больше нуля):");
-        distance = scanner.nextInt();
+        do {
+            distance = scanner.nextInt();
+        } while (distance <= 0);
 
         for (Animal animal : animals) {
             int runDistance = animal.swim(distance);

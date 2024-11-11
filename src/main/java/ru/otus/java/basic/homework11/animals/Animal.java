@@ -44,7 +44,7 @@ public abstract class Animal {
     }
 
     public int run(int distance) {
-        if (groundSpeed <= 0) {
+        if (groundSpeed <= 0 || distance <= 0) {
             return -1;
         }
         int time = distance * groundSpeed;
