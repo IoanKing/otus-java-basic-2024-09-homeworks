@@ -53,7 +53,7 @@ public abstract class Animal {
             endurance = 0;
             return -1;
         }
-        endurance -= time;
+        endurance -= distance;
         return time;
     }
 
@@ -67,7 +67,7 @@ public abstract class Animal {
             endurance = 0;
             return -1;
         }
-        endurance -= time;
+        endurance -= distance * waterSpeed;
         return time;
     }
 
