@@ -89,17 +89,19 @@ public class MainApplication {
 
     private static void catEating(Cat[] cats, Plate plate) {
         for (Cat cat: cats) {
-            boolean wedFillCat = false;
-            wedFillCat = cat.eating(plate);
-            if (wedFillCat) {
+            int catAppetite = cat.getAppetite();
+            if (plate.getFilling() >= catAppetite && cat.isHungry()) {
+                plate.removeItem(catAppetite);
+                cat.feed();;
                 System.out.println(cat.getName() + " покушал.");
             }
         }
+        System.out.println("В тарелке осталось " + plate.getFilling() + " единиц еды.");
     }
 
     private static void checkPlate(Plate plate) {
         int plateFilling = plate.getFilling();
-        System.out.println("В тарелке " + plateFilling + " еды.");
+        System.out.println("В тарелке " + plateFilling + " единиц еды.");
     }
 
     private static void getCatsInfo(Cat[] cats) {
