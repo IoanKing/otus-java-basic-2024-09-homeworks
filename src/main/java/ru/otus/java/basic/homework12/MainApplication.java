@@ -30,15 +30,12 @@ public class MainApplication {
         do {
             System.out.println("====================================\n" +
                     "Пожалуйста выберите что вы хотите сделать: \n" +
-                    "--Коты--\n" +
                     "1. Вывести информацию о котах\n" +
                     "2. Список голодных котов\n" +
                     "3. Покормить котов\n" +
                     "4. Подождать пока все коты будут голодными\n" +
-                    "--Тарелка--\n" +
                     "5. Проверить наполнение тарелки\n" +
                     "6. Наполнить тарелку\n" +
-                    "---\n" +
                     "7. Выйти");
             command = scanner.nextInt();
             switch (command) {
@@ -89,10 +86,9 @@ public class MainApplication {
 
     private static void catEating(Cat[] cats, Plate plate) {
         for (Cat cat: cats) {
-            int catAppetite = cat.getAppetite();
-            if (plate.getFilling() >= catAppetite && cat.isHungry()) {
-                plate.removeItem(catAppetite);
-                cat.feed();;
+            boolean hungryStatus = cat.isHungry();
+            boolean eatingStatus = cat.eating(plate);
+            if (hungryStatus ^ eatingStatus) {
                 System.out.println(cat.getName() + " покушал.");
             }
         }
@@ -106,7 +102,7 @@ public class MainApplication {
 
     private static void getCatsInfo(Cat[] cats) {
         for (Cat cat: cats) {
-            System.out.println(cat);
+            cat.getInfo();
         }
     }
 }

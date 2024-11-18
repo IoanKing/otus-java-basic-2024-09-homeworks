@@ -30,15 +30,14 @@ public class Plate {
 
     /**
      * Метод удаляет из тарелки еду. В тарелке не может быть меньше нуля еды.
-     * @param volume количество убавляемой еды.
-     * @return
+     * @param amount количество убавляемой еды.
+     * @return получилось ли убрать из тарелки volume еды? (true|false)
      */
-    public boolean removeItem(int volume) {
-        this.filling -= volume;
-        if (this.filling < 0) {
-            this.filling = 0;
+    public boolean removeItem(int amount) {
+        if (this.filling < amount) {
             return false;
         }
+        this.filling -= amount;
         return true;
     }
 }

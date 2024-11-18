@@ -25,10 +25,6 @@ public abstract class Animal {
         return isHungry;
     }
 
-    public void feed() {
-        isHungry = false;
-    }
-
     public void setHungry() {
         isHungry = true;
     }
@@ -37,6 +33,10 @@ public abstract class Animal {
         this.name = name;
         this.appetite = appetite;
         isHungry = true;
+    }
+
+    public void getInfo() {
+        System.out.println("Кот " + name + " с аппетитом " + appetite + ".  Голодный: " + isHungry);
     }
 
     @Override

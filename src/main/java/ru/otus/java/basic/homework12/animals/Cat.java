@@ -6,4 +6,11 @@ public class Cat extends Animal {
     public Cat(String name, int appetite) {
         super(name, appetite);
     }
+
+    public boolean eating(Plate plate) {
+        if (isHungry) {
+            isHungry = !plate.removeItem(appetite);
+        }
+        return isHungry;
+    }
 }
