@@ -36,11 +36,11 @@ public abstract class Animal {
     }
 
     public void getInfo() {
-        System.out.println("Кот " + name + " с аппетитом " + appetite + ".  Голодный: " + isHungry);
+        System.out.println(name + " с аппетитом " + appetite + ".  Голодный: " + isHungry);
     }
 
     @Override
     public String toString() {
-        return "Кот " + name + " с аппетитом " + appetite + ".  Голодный: " + isHungry;
+        return name + " с аппетитом " + appetite + ".  Голодный: " + isHungry;
     };
 }
