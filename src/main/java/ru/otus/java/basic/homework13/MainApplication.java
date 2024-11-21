@@ -16,19 +16,19 @@ public class MainApplication {
         System.out.println("====== Домашняя работа по лекции №13 ======");
         System.out.println("===========================================");
         Transport[] vehicles = {
-                new Car("Машина Нива", 300),
-                new Horse("Лошадь Пегас", 250),
-                new AllTerrainVehicle("Вездеход Урал", 1000),
+                new Car("Машина Нива", 100),
+                new Horse("Лошадь Пегас", 100),
+                new AllTerrainVehicle("Вездеход Урал", 100),
                 new Bicycle("Велосипед Заря")
         };
 
         Landscape[] trace = {
                 new Forest(50),
-                new Plain(50),
-                new Forest(50),
-                new Plain(50),
+                new Plain(100),
+                new Forest(100),
+                new Plain(150),
                 new Swamp(50),
-                new Plain(50)
+                new Plain(150)
         };
 
         Human man = new Human("Иван", 100);

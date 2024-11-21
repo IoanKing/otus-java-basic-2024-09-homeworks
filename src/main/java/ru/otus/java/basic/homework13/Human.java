@@ -41,10 +41,10 @@ public class Human implements Particant, Transport {
         endurance = Math.max(endurance - distance, 0);
         if (endurance == 0) {
             isActive = false;
-            System.out.println("...." + name + " не смог пройти дистанцию пешком.");
+            System.out.println("..." + name + " не смог пройти дистанцию пешком.");
             return false;
         }
-        System.out.println("...." + name + " прошёл дистанцию пешком.");
+        System.out.println("..." + name + " прошёл дистанцию пешком.");
         return true;
     }
 
@@ -61,7 +61,7 @@ public class Human implements Particant, Transport {
     public boolean enterTransport(Transport transport) {
         currentTransport = transport;
         if (currentTransport.isActive()) {
-            System.out.println(".." + name + " сел в транспорт: " + currentTransport.getName());
+            System.out.println("├--" + name + " сел в транспорт: " + currentTransport.getName());
             return true;
         }
         return false;
@@ -70,7 +70,7 @@ public class Human implements Particant, Transport {
     @Override
     public boolean outTransport() {
         if (currentTransport != null) {
-            System.out.println(".." + name + " покинул транспорт: " + currentTransport.getName());
+            System.out.println("..." + name + " покинул транспорт.");
             currentTransport = null;
         }
         return true;

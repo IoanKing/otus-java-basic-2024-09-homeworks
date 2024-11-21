@@ -41,17 +41,17 @@ public class Horse implements Transport {
     public boolean move(int distance, Terrain terrain) {
         for (Terrain landscape : closedTerrain) {
             if (landscape == terrain) {
-                System.out.println("....Не получилось преодолеть " + terrain.getName() + ".");
+                System.out.println("...Не получилось преодолеть " + terrain.getName() + ".");
                 return false;
             }
         }
-        endurance -= distance;
+        endurance = Math.max(endurance - distance, -1);
         if (endurance < 0) {
             isActive = false;
-            System.out.println("....Не получилось преодолеть " + terrain.getName() + ".");
+            System.out.println("...Не получилось преодолеть " + terrain.getName() + ".");
             return false;
         }
-        System.out.println("...." + terrain.getName() + " преодолена.");
+        System.out.println("..." + terrain.getName() + " преодолена.");
         return true;
     }
 

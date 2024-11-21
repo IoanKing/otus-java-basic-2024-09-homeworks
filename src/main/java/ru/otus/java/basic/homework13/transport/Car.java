@@ -37,17 +37,17 @@ public class Car implements Transport {
     public boolean move(int distance, Terrain terrain) {
         for (Terrain landscape : closedTerrain) {
             if (landscape == terrain) {
-                System.out.println("....Не получилось преодолеть " + terrain.getName() + ".");
+                System.out.println("...Не получилось преодолеть " + terrain.getName() + ".");
                 return false;
             }
         }
-        fuel -= distance;
+        fuel = Math.max(fuel - distance, -1);
         if (fuel < 0) {
             isActive = false;
-            System.out.println("....Не получилось преодолеть " + terrain.getName() + ".");
+            System.out.println("...Не получилось преодолеть " + terrain.getName() + ".");
             return false;
         }
-        System.out.println("...." + terrain.getName() + " преодолена.");
+        System.out.println("..." + terrain.getName() + " преодолена.");
         return true;
     }
 

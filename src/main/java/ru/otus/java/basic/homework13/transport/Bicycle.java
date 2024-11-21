@@ -35,17 +35,17 @@ public class Bicycle implements Transport {
     public boolean move(int distance, Terrain terrain) {
         for (Terrain landscape : closedTerrain) {
             if (landscape == terrain) {
-                System.out.println("....Не получилось преодолеть " + terrain.getName() + ".");
+                System.out.println("...Не получилось преодолеть " + terrain.getName() + ".");
                 return false;
             }
         }
-        System.out.println("...." + terrain.getName() + " преодолена.");
+        System.out.println("..." + terrain.getName() + " преодолена.");
         return true;
     }
 
     @Override
     public boolean isActive() {
-        return true;
+        return isActive;
     }
 
     public Bicycle(String name) {
