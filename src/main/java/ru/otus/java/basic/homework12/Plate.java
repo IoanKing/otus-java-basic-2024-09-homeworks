@@ -22,10 +22,7 @@ public class Plate {
      * @param volume количество добавляемой еды.
      */
     public void addItems(int volume) {
-        this.filling += volume;
-        if (this.filling > this.capacity) {
-            this.filling = this.capacity;
-        }
+        this.filling = Math.min(this.filling + volume, this.capacity);
     }
 
     /**

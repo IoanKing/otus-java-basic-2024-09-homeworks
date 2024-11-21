@@ -9,8 +9,11 @@ public class Cat extends Animal {
 
     public boolean eating(Plate plate) {
         if (isHungry) {
-            isHungry = !plate.removeItem(appetite);
+            if (plate.removeItem(appetite)) {
+                isHungry = false;
+                return true;
+            }
         }
-        return isHungry;
+        return false;
     }
 }
