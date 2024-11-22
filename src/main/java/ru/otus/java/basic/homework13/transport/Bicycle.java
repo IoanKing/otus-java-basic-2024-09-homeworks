@@ -62,11 +62,6 @@ public class Bicycle implements Transport {
         isActive = false;
     }
 
-    @Override
-    public TransportType getTransportType() {
-        return TransportType.BICYCLE;
-    }
-
     public Bicycle(String name) {
         this.name = name;
         isActive = true;

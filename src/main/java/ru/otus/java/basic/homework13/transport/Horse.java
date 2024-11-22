@@ -72,11 +72,6 @@ public class Horse implements Transport {
         driver = null;
     }
 
-    @Override
-    public TransportType getTransportType() {
-        return TransportType.HORSE;
-    }
-
     public Horse(String name, int endurance) {
         this.name = name;
         this.endurance = endurance;

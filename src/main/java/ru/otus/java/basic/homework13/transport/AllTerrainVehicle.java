@@ -63,11 +63,6 @@ public class AllTerrainVehicle implements Transport {
         driver = null;
     }
 
-    @Override
-    public TransportType getTransportType() {
-        return TransportType.ALL_TERRAIN_VEHICLE;
-    }
-
     public AllTerrainVehicle(String name, int fuel) {
         this.name = name;
         this.fuel = fuel;

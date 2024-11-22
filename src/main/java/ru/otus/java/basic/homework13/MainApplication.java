@@ -15,10 +15,10 @@ public class MainApplication {
         System.out.println("====== Домашняя работа по лекции №13 ======");
         System.out.println("===========================================");
         Transport[] vehicles = {
-                new Car("Машина Нива", 200),
-                new Horse("Лошадь Пегас", 100),
-                new AllTerrainVehicle("Вездеход Урал", 300),
-                new Bicycle("Велосипед Заря")
+                new Car("Нива", 200),
+                new Horse("Пегас", 100),
+                new AllTerrainVehicle("Урал", 300),
+                new Bicycle("Заря")
         };
 
         Territory[] trace = {

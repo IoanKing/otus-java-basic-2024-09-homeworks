@@ -3,7 +3,6 @@ package ru.otus.java.basic.homework13;
 import ru.otus.java.basic.homework13.interfaces.Transport;
 import ru.otus.java.basic.homework13.interfaces.Traveler;
 import ru.otus.java.basic.homework13.landscape.Location;
-import ru.otus.java.basic.homework13.transport.TransportType;
 
 public class Human implements Traveler {
     private final String name;

@@ -72,11 +72,6 @@ public class Car implements Transport {
         driver = null;
     }
 
-    @Override
-    public TransportType getTransportType() {
-        return TransportType.CAR;
-    }
-
     public Car(String name, int fuel) {
         this.name = name;
         this.fuel = fuel;
