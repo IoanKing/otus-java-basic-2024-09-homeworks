@@ -1,25 +1,26 @@
 package ru.otus.java.basic.homework13;
 
-import ru.otus.java.basic.homework13.interfaces.Particant;
 import ru.otus.java.basic.homework13.interfaces.Transport;
-import ru.otus.java.basic.homework13.landscape.Terrain;
+import ru.otus.java.basic.homework13.interfaces.Traveler;
+import ru.otus.java.basic.homework13.landscape.Location;
+import ru.otus.java.basic.homework13.transport.TransportType;
 
-public class Human implements Particant, Transport {
-    private String name;
+public class Human implements Traveler {
+    private final String name;
     private Transport currentTransport;
     private int endurance;
-    private int maxEndurance;
-    private boolean isActive;
+    private final int maxEndurance;
+    private boolean isRested;
 
     public String getName() {
         return name;
     }
 
     public void rest() {
+        System.out.println("...путешественник отдохнул.");
         endurance = maxEndurance;
     }
 
-    @Override
     public void getInfo() {
         String transportName = "";
         if (currentTransport != null) {
@@ -28,29 +29,56 @@ public class Human implements Particant, Transport {
         System.out.println("Человек \"" + name + "\" | Выносливость: " + endurance + "/" + maxEndurance + " | Транспорт: " + transportName);
     }
 
-    @Override
-    public boolean canMove(Terrain terrain) {
-        return true;
-    }
-
-    @Override
-    public boolean move(int distance, Terrain terrain) {
+    public boolean move(int distance, Location location) {
         if (currentTransport != null) {
-            return currentTransport.move(distance, terrain);
-        }
-        endurance = Math.max(endurance - distance, 0);
-        if (endurance == 0) {
-            isActive = false;
-            System.out.println("..." + name + " не смог пройти дистанцию пешком.");
+            if (currentTransport.canMove(location)) {
+                return currentTransport.move(distance, location);
+            }
             return false;
         }
-        System.out.println("..." + name + " прошёл дистанцию пешком.");
+        return walk(distance, location);
+    }
+
+    public boolean walk(int distance, Location location) {
+        if (location == Location.ROADSIDE_HOTEL) {
+            rest();
+        }
+        if (!isRested) return false;
+        endurance = Math.max(endurance - distance, -1);
+        if (endurance < 0) {
+            System.out.println("..." + name + " не смог преодолеть дистанцию. Устал.");
+            return false;
+        }
+        System.out.println("..." + name + " преодолел дистанцию дистанцию.");
+        if (endurance <= 0) {
+            System.out.println("..." + name + " устал.");
+            isRested = false;
+        }
         return true;
     }
 
-    @Override
+    public boolean runBicycle(int distance, Location location) {
+        if (location == Location.ROADSIDE_HOTEL) {
+            rest();
+        }
+        if (!isRested) return false;
+        endurance = Math.max(endurance - distance, -1);
+        if (endurance < 0) {
+            System.out.println("..." + name + " не смог преодолеть дистанцию. Устал.");
+            outTransport();
+            return false;
+        }
+        System.out.println("..." + name + " преодолел дистанцию дистанцию.");
+        if (endurance <= 0) {
+            System.out.println("..." + name + " устал.");
+            outTransport();
+            isRested = false;
+        }
+        return true;
+    }
+
     public boolean isActive() {
-        return isActive;
+        return isRested;
     }
 
     public Transport getCurrentTransport() {
@@ -58,22 +86,21 @@ public class Human implements Particant, Transport {
     }
 
     @Override
-    public boolean enterTransport(Transport transport) {
-        currentTransport = transport;
-        if (currentTransport.isActive()) {
+    public void enterTransport(Transport transport) {
+        if (transport.isActive()) {
+            currentTransport = transport;
+            currentTransport.getOn(this);
             System.out.println("├--" + name + " сел в транспорт: " + currentTransport.getName());
-            return true;
+            return;
         }
-        return false;
+        System.out.println("├--" + name + " не получилось сесть в транспорт: " + currentTransport.getName());
     }
 
     @Override
-    public boolean outTransport() {
-        if (currentTransport != null) {
-            System.out.println("..." + name + " покинул транспорт.");
-            currentTransport = null;
-        }
-        return true;
+    public void outTransport() {
+        currentTransport.getOff();
+        currentTransport = null;
+        System.out.println("..." + name + " покинул транспорт.");
     }
 
     public Human(String name, int endurance) {
@@ -81,7 +108,7 @@ public class Human implements Particant, Transport {
         this.endurance = endurance;
         maxEndurance = endurance;
         currentTransport = null;
-        isActive = true;
+        isRested = true;
     }
 
 }

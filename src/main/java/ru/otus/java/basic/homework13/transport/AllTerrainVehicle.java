@@ -1,13 +1,15 @@
 package ru.otus.java.basic.homework13.transport;
 
+import ru.otus.java.basic.homework13.Human;
 import ru.otus.java.basic.homework13.interfaces.Transport;
-import ru.otus.java.basic.homework13.landscape.Terrain;
+import ru.otus.java.basic.homework13.landscape.Location;
 
 public class AllTerrainVehicle implements Transport {
-    private String name;
+    private final String name;
     private int fuel;
-    private int maxFuel;
+    private final int maxFuel;
     private boolean isActive;
+    private Human driver;
 
     @Override
     public String getName() {
@@ -16,29 +18,54 @@ public class AllTerrainVehicle implements Transport {
 
     @Override
     public void getInfo() {
-        System.out.println("Вездеход \"" + name + "\" | Топливо: " + fuel + "/" + maxFuel + " | Труднопроходимый ландшафт: нет");
+        System.out.println("Вездеход \"" + name + "\" | Топливо: " + fuel + "/" + maxFuel + " | Труднопроходимый ландшафт: нет | Можно использовать: " + isActive);
     }
 
     @Override
-    public boolean canMove(Terrain terrain) {
+    public boolean canMove(Location location) {
         return true;
     }
 
     @Override
-    public boolean move(int distance, Terrain terrain) {
+    public boolean move(int distance, Location location) {
+        if (driver == null) return false;
+        if (location == Location.FILLING_STANTION) {
+            fuel = maxFuel;
+            isActive = true;
+            System.out.println("...машина заправлена");
+            return true;
+        }
         fuel = Math.max(fuel - distance, -1);
         if (fuel < 0) {
-            isActive = false;
-            System.out.println("...Не получилось преодолеть " + terrain.getName() + ".");
+            System.out.println("...Топливо кончилось");
+            System.out.println("...Не получилось преодолеть " + location.toString());
             return false;
         }
-        System.out.println("..." + terrain.getName() + " преодолена.");
+        System.out.println("..." + location.toString() + " преодолена.");
+        if (fuel <= 0) {
+            isActive = false;
+        }
         return true;
     }
 
     @Override
     public boolean isActive() {
         return isActive;
+    }
+
+    @Override
+    public void getOn(Human traveler) {
+        driver = traveler;
+    }
+
+    @Override
+    public void getOff() {
+        driver = null;
+    }
+
+    @Override
+    public TransportType getTransportType() {
+        return TransportType.ALL_TERRAIN_VEHICLE;
     }
 
     public AllTerrainVehicle(String name, int fuel) {

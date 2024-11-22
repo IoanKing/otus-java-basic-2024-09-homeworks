@@ -2,9 +2,8 @@ package ru.otus.java.basic.homework13;
 
 import ru.otus.java.basic.homework13.interfaces.Landscape;
 import ru.otus.java.basic.homework13.interfaces.Transport;
-import ru.otus.java.basic.homework13.landscape.Forest;
-import ru.otus.java.basic.homework13.landscape.Plain;
-import ru.otus.java.basic.homework13.landscape.Swamp;
+import ru.otus.java.basic.homework13.landscape.Location;
+import ru.otus.java.basic.homework13.landscape.Territory;
 import ru.otus.java.basic.homework13.transport.AllTerrainVehicle;
 import ru.otus.java.basic.homework13.transport.Bicycle;
 import ru.otus.java.basic.homework13.transport.Car;
@@ -16,19 +15,25 @@ public class MainApplication {
         System.out.println("====== Домашняя работа по лекции №13 ======");
         System.out.println("===========================================");
         Transport[] vehicles = {
-                new Car("Машина Нива", 100),
+                new Car("Машина Нива", 200),
                 new Horse("Лошадь Пегас", 100),
-                new AllTerrainVehicle("Вездеход Урал", 100),
+                new AllTerrainVehicle("Вездеход Урал", 300),
                 new Bicycle("Велосипед Заря")
         };
 
-        Landscape[] trace = {
-                new Forest(50),
-                new Plain(100),
-                new Forest(100),
-                new Plain(150),
-                new Swamp(50),
-                new Plain(150)
+        Territory[] trace = {
+                new Territory(Location.DENSE_FOREST, 100),
+                new Territory(Location.SWAMP, 50),
+                new Territory(Location.PLAIN, 50),
+                new Territory(Location.DENSE_FOREST, 10),
+                new Territory(Location.FILLING_STANTION, 0),
+                new Territory(Location.DENSE_FOREST, 150),
+                new Territory(Location.ROADSIDE_HOTEL, 0),
+                new Territory(Location.PLAIN, 100),
+                new Territory(Location.SWAMP, 50),
+                new Territory(Location.PLAIN, 150),
+                new Territory(Location.DENSE_FOREST, 50),
+                new Territory(Location.PLAIN, 150),
         };
 
         Human man = new Human("Иван", 100);
@@ -43,26 +48,30 @@ public class MainApplication {
         man.getInfo();
 
         System.out.println("\n=============Трасса================");
-        for (Landscape land : trace) {
+        for (Territory land : trace) {
             land.getInfo();
         }
 
         System.out.println("\n========Прохождение трассы=============");
-        for (Landscape landscape : trace) {
+        for (Territory landscape : trace) {
             landscape.getInfo();
             // Попытка пройти локацию на транспорте
             for (Transport vehicle : vehicles) {
-                if (!vehicle.isActive()) continue;
+                if (!vehicle.isActive()) {
+                    if (man.getCurrentTransport() == vehicle) {
+                        man.outTransport();
+                    }
+                    continue;
+                }
                 if (man.getCurrentTransport() == null) {
                     man.enterTransport(vehicle);
                 }
-                successTravel = landscape.move(man);
+                successTravel = landscape.crossing(landscape.getLength(), man);
                 if (successTravel) break;
                 man.outTransport();
             }
-            // Если транспортом не получилось пройти - идем пешком.
             if (!successTravel) {
-                successTravel = landscape.move(man);
+                successTravel = landscape.crossing(landscape.getLength(), man);
             }
             if (!successTravel) break;
         }
