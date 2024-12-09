@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PhoneBook {
-    private Map<String, String> map = new HashMap<>();
+    final private Map<String, String> map = new HashMap<>();
 
     public PhoneBook(String[] phones, String[] name) {
         int maxSize = Math.min(phones.length, name.length);

@@ -1,5 +1,7 @@
 package ru.otus.java.basic.homework18;
 
+import java.util.List;
+
 public class MainApp {
     public static void main(String[] args) {
         System.out.println("=========================================");
@@ -60,9 +62,10 @@ public class MainApp {
         }
 
         System.out.println("\n---Проверяем какие номера есть у сотрудника в книге---");
+
         for (String name : checkedNames) {
-            System.out.println("Какие номера есть в книге у сотрудника \"" + name + "\" ?");
-            System.out.println(phoneBook.find(name));
+            List<String> numbers = phoneBook.find(name);
+            System.out.println(numbers.isEmpty() ? name + " - Нет записей" : name + ": " + numbers);
         }
     }
 }
