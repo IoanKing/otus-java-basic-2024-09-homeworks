@@ -15,11 +15,11 @@ public class PhoneBook {
     }
 
     public void add(String name, String phoneNumber) {
-        if (!this.containsPhoneNumber(phoneNumber)) {
-            map.put(phoneNumber, name);
+        if (this.containsPhoneNumber(phoneNumber)) {
+            System.out.println("В телефонной книге уже содержится номер: " + phoneNumber);
             return;
         }
-        System.out.println("В телефонной книге уже содержится номер: " + phoneNumber);
+        map.put(phoneNumber, name);
     }
 
     public ArrayList<String> find(String name) {
