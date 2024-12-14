@@ -83,7 +83,6 @@ public class MainApp {
         System.out.println(Arrays.toString(array));
 
         System.out.println("\n----------Генерация случайного массива----------");
-        array = new int[MAX_ARRAY_SIZE];
         Measure.stamp();
         for (int i = 0; i < array.length; i++) {
             array[i] = getRandomInt(MIN_ARRAY_VALUE, MAX_ARRAY_VALUE);
