@@ -1,6 +1,6 @@
 package ru.otus.java.basic.homework21.Server;
 
-import ru.otus.java.basic.homework21.Util.ClientHandler;
+import ru.otus.java.basic.homework21.ignoredFile.ClientHandler;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
-    private static final List<ClientHandler> clientHandlers = new ArrayList<>();
-
     public static void main(String[] args) throws IOException {
         System.out.println("=========================================");
         System.out.println("===== Домашнее задание. Лекция №21 ======");
@@ -25,8 +23,6 @@ public class Server {
             DataInputStream inputStream = new DataInputStream(client.getInputStream());
             DataOutputStream outputStream = new DataOutputStream(client.getOutputStream());
             System.out.println("Клиент с портом :" + client.getPort() + " подключился!");
-            ClientHandler clientHandler = new ClientHandler(client, inputStream, outputStream);
-            clientHandlers.add(clientHandler);
             String userInput = inputStream.readUTF();
             if (userInput.equals("exit")) {
                 System.out.println("Клиент с портом :" + client.getPort() + " отключился!");
