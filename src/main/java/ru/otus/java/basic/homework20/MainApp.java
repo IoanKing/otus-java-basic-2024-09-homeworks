@@ -80,7 +80,8 @@ public class MainApp {
         System.out.println("Введите строчку текста для записи в файл");
         newLine = scanner.nextLine();
 
-        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(fileName, true))) {
+        try (FileOutputStream fos = new FileOutputStream(fileName, true);
+             BufferedOutputStream out = new BufferedOutputStream(fos)) {
             byte[] buffer = newLine.getBytes(StandardCharsets.UTF_8);
             for (int i = 0; i < buffer.length; i++) {
                 out.write(buffer[i]);
