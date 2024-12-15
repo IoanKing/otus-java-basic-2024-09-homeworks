@@ -1,5 +1,6 @@
 package ru.otus.java.basic.homework19;
 
+import ru.otus.java.basic.homework19.SearchTree.Tree;
 import ru.otus.java.basic.homework19.Utils.Measure;
 
 import java.util.Arrays;
@@ -95,6 +96,20 @@ public class MainApp {
         SortArray.quickSort(array, 0, array.length-1);
         Measure.print();
         System.out.println(Arrays.toString(array));
+
+        System.out.println("\n=============ЗАДАНИЯ С ДВОИЧНЫМ ДЕРЕВОМ ПОИСКА===========");
+        Tree searchTree = new Tree(0);
+        Measure.stamp();
+        searchTree.getSortedList();
+        Measure.print();
+        Measure.stamp();
+        searchTree.inorder();
+        Measure.print();
+
+        System.out.println("\n----------поиск элемента----------");
+        Measure.stamp();
+        System.out.println(searchTree.find(-200));
+        Measure.print();
     }
     
     /**

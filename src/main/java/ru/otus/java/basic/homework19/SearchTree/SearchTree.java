@@ -1,4 +1,4 @@
-package ru.otus.java.basic.homework19;
+package ru.otus.java.basic.homework19.SearchTree;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ public interface SearchTree<T> {
      */
     T find(T element);
 
-    List<T> getSortedList();
+//    List<T> getSortedList();
 }
