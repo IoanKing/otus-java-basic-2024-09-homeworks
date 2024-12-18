@@ -1,25 +1,34 @@
 package ru.otus.java.basic.homework19;
 
-import ru.otus.java.basic.homework19.SearchTree.Tree;
+import ru.otus.java.basic.homework19.PersonDataBase.Person;
+import ru.otus.java.basic.homework19.PersonDataBase.PersonDataBase;
+import ru.otus.java.basic.homework19.PersonDataBase.Position;
+import ru.otus.java.basic.homework19.SearchTree.Node;
+import ru.otus.java.basic.homework19.SearchTree.TreeNode;
 import ru.otus.java.basic.homework19.Utils.Measure;
-
+import ru.otus.java.basic.homework19.Utils.SortArray;
+import static ru.otus.java.basic.homework19.Utils.RandomInt.getRandomInt;
 import java.util.Arrays;
 
 public class MainApp {
-    
     public static void main(String[] args) {
         System.out.println("=========================================");
         System.out.println("===== Домашнее задание. Лекция №19 ======");
         System.out.println("=========================================");
-
-        System.out.println("\n=============ЗАДАНИЯ ПРО PERSONAL DATA BASE===========");
 
         final int MAX_SIZE = 100_000;
         final String NEW_PERSON_NAME = "Иванов Иван Иванович";
         final int SEARCH_INDEX_1 = 5_000;
         final int SEARCH_INDEX_2 = 2_500;
         final int SEARCH_INDEX_3 = 6_500;
-        final int SEARCH_INDEX_4 = 1_500;
+        final int MAX_ARRAY_SIZE = 10_000;
+        final int MIN_ARRAY_VALUE = -1_000;
+        final int MAX_ARRAY_VALUE = 1_000;
+        final int SEARCH_ELEMENT = 63;
+        int[] array = new int[MAX_ARRAY_SIZE];
+
+        System.out.println("\n=============ЗАДАНИЯ ПРО PERSONAL DATA BASE===========");
+
         PersonDataBase dataBase= new PersonDataBase();
         Person searchedPerson;
         boolean isManager;
@@ -64,12 +73,8 @@ public class MainApp {
         System.out.println(isEmployer ? "ДА" : "НЕТ");
 
         System.out.println("\n=============ЗАДАНИЯ ПРО СОРТИРОВКУ===========");
-        final int MAX_ARRAY_SIZE = 10_000;
-        final int MIN_ARRAY_VALUE = -1_000;
-        final int MAX_ARRAY_VALUE = 1_000;
 
         System.out.println("\n----------Генерация случайного массива----------");
-        int[] array = new int[MAX_ARRAY_SIZE];
         Measure.stamp();
         for (int i = 0; i < array.length; i++) {
             array[i] = getRandomInt(MIN_ARRAY_VALUE, MAX_ARRAY_VALUE);
@@ -79,7 +84,7 @@ public class MainApp {
 
         System.out.println("\n----------Сортировка (пузырьком)----------");
         Measure.stamp();
-        SortArray.bubleSort(array);
+        SortArray.bubbleSort(array);
         Measure.print();
         System.out.println(Arrays.toString(array));
 
@@ -98,28 +103,24 @@ public class MainApp {
         System.out.println(Arrays.toString(array));
 
         System.out.println("\n=============ЗАДАНИЯ С ДВОИЧНЫМ ДЕРЕВОМ ПОИСКА===========");
-        Tree searchTree = new Tree(0);
+
+        TreeNode<Node> searchTree = new TreeNode<>();
+
+        System.out.println("\n----------Построение дерева ----------");
         Measure.stamp();
         searchTree.getSortedList();
         Measure.print();
+
+        System.out.println("\n----------Визуализация дерева----------");
         Measure.stamp();
-        searchTree.inorder();
+        searchTree.print();
         Measure.print();
 
-        System.out.println("\n----------поиск элемента----------");
+        System.out.println("\n----------Поиск элемента (" + SEARCH_ELEMENT + ")----------");
+        Node searchedElement = new Node(SEARCH_ELEMENT);
         Measure.stamp();
-        System.out.println(searchTree.find(-200));
+        Node searchResult = searchTree.find(searchedElement);
         Measure.print();
-    }
-    
-    /**
-     * Получение случайного числа в заданном диапазоне
-     * @param min минимальное значение диапазона
-     * @param max максимальное значение диапазона
-     * @return int
-     */
-    public static int getRandomInt (int min, int max) {
-        return min + (int) (Math.random() * (max - min));
+        System.out.println("searchResult: " + searchResult);
     }
 }
-

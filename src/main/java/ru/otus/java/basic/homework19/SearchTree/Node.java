@@ -1,11 +1,12 @@
 package ru.otus.java.basic.homework19.SearchTree;
 
-class Node {
-    private int key;
-    private Node left, right;
+public class Node {
+    private final int value;
+    private Node left;
+    private Node right;
 
-    public int getKey() {
-        return key;
+    public int getValue() {
+        return value;
     }
 
     public Node getLeft() {
@@ -24,8 +25,20 @@ class Node {
         this.right = right;
     }
 
-    public Node(int item) {
-        key = item;
-        left = right = null;
+    public Node(int value, Node left, Node right) {
+        this.value = value;
+        this.left = left;
+        this.right = right;
+    }
+
+    public Node(int value) {
+        this.value = value;
+        left = null;
+        right = null;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" + value + "}";
     }
 }

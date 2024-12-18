@@ -1,4 +1,4 @@
-package ru.otus.java.basic.homework19;
+package ru.otus.java.basic.homework19.PersonDataBase;
 
 import java.util.Objects;
 
