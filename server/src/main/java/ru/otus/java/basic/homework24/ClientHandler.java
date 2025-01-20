@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-
 public class ClientHandler {
     private Socket socket;
     private Server server;
@@ -14,7 +13,6 @@ public class ClientHandler {
 
     private String username;
     private static int userCount = 0;
-
 
     public ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
@@ -31,16 +29,23 @@ public class ClientHandler {
 
                 while (true) {
                     String message = in.readUTF();
+                    String targetUsername = "";
+                    String targetMessage = "";
                     if (message.startsWith("/")) {
                         if (message.equalsIgnoreCase("/exit")) {
                             sendMsg("/exitok");
-                            server.unsubscribe(this);
                             break;
-                        } else {
-                            server.broadcastMessage(message);
+                        }
+                        if (message.startsWith("/name")) {
+                            server.clientMessage("name = " + username, username);
+                        }
+                        if (message.startsWith("/w")) {
+                            targetUsername = message.substring(3, message.indexOf(" ", 3));
+                            targetMessage = message.substring(message.indexOf(" ", 3)+1);
+                            server.clientMessage(username + " : " + targetMessage, targetUsername);
                         }
                     } else {
-                        server.broadcastMessage(message);
+                        server.broadcastMessage(username + " : " + message);
                     }
                 }
             } catch (IOException e) {

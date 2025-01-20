@@ -38,19 +38,15 @@ public class Server {
     }
 
     public void broadcastMessage(String message){
-        String targetMessage = "";
-        String targetUser = "";
-        if (message.startsWith("/w")) {
-            int nameEndIndex = message.indexOf(" ", 3);
-            targetUser = message.substring(3, nameEndIndex);
-            targetMessage = message.substring(nameEndIndex + 1);
-        } else {
-            targetMessage = message;
-        }
         for (ClientHandler c : clients) {
-            String userName = c.getUsername();
-            if (targetUser.isEmpty() || targetUser.equals(userName)) {
-                c.sendMsg(userName + " : " + targetMessage);
+            c.sendMsg(message);
+        }
+    }
+
+    public void clientMessage(String message, String clientName){
+        for (ClientHandler c : clients) {
+            if (c.getUsername().equals(clientName)) {
+                c.sendMsg(message);
             }
         }
     }
