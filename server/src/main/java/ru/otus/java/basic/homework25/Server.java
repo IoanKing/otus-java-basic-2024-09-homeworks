@@ -59,9 +59,7 @@ public class Server {
     public void kickUser(String clientName) {
         for (ClientHandler c : clients) {
             if (c.getUsername().equals(clientName)) {
-                c.sendMsg("Вы были отключены от чата администратором.");
-                c.sendMsg("/exitok");
-//                c.disconnect();
+                c.sendMsg("/kickoff");
                 break;
             }
         }
@@ -74,10 +72,6 @@ public class Server {
             }
         }
         return false;
-    }
-
-    public List<ClientHandler> getClients() {
-        return clients;
     }
 
     public AuthenticatedProvider getAuthenticatedProvider() {

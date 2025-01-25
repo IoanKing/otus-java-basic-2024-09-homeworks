@@ -28,7 +28,7 @@ public class Client {
                             break;
                         }
                         if (message.equalsIgnoreCase("/kickoff")) {
-                            break;
+                            out.writeUTF("/exit");
                         }
                         if (message.startsWith("/authok ")) {
                             System.out.println("Удалось успешно войти в чат с именем пользователя "
@@ -52,6 +52,10 @@ public class Client {
 
         while (true) {
             String message = scanner.nextLine();
+            if (socket.isClosed()) {
+                System.out.println("Вы были отключены от чата администратором.");
+                break;
+            }
             out.writeUTF(message);
             if (message.equalsIgnoreCase("/exit")) {
                 break;
@@ -84,6 +88,5 @@ public class Client {
             System.err.println("Ошибка при отключении соединения: " + e.getMessage());
             e.printStackTrace();
         }
-        return;
     }
 }
