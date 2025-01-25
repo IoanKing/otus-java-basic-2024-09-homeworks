@@ -39,9 +39,15 @@ public class ClientHandler {
                         if (message.startsWith("/name")) {
                             server.clientMessage("name = " + username, username);
                         }
+                        server.clientMessage(username + " : " + targetMessage, targetUsername);
                         if (message.startsWith("/w")) {
-                            targetUsername = message.substring(3, message.indexOf(" ", 3));
-                            targetMessage = message.substring(message.indexOf(" ", 3)+1);
+                            if (message.contains(" ")) {
+                                targetUsername = message.substring(3, message.indexOf(" ", 3));
+                                targetMessage = message.substring(message.indexOf(" ", 3) + 1);
+                            } else {
+                                sendMsg("Ошибка: Неверный формат команды.");
+                                continue;
+                            }
                             server.clientMessage(username + " : " + targetMessage, targetUsername);
                         }
                     } else {
@@ -49,6 +55,7 @@ public class ClientHandler {
                     }
                 }
             } catch (IOException e) {
+                System.err.println("Ошибка при подключении клиента: " + e.getMessage());
                 e.printStackTrace();
             } finally {
                 disconnect();
@@ -60,6 +67,7 @@ public class ClientHandler {
         try {
             out.writeUTF(message);
         } catch (IOException e) {
+            System.err.println("Ошибка при отправки сообщения клиенту: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -71,6 +79,7 @@ public class ClientHandler {
                 in.close();
             }
         } catch (IOException e) {
+            System.err.println("Ошибка при отключении клиента от сервера: " + e.getMessage());
             e.printStackTrace();
         }
         try {
@@ -78,6 +87,7 @@ public class ClientHandler {
                 out.close();
             }
         } catch (IOException e) {
+            System.err.println("Ошибка при отключении клиента от сервера: " + e.getMessage());
             e.printStackTrace();
         }
         try {
@@ -85,6 +95,7 @@ public class ClientHandler {
                 socket.close();
             }
         } catch (IOException e) {
+            System.err.println("Ошибка при отключении клиента от сервера: " + e.getMessage());
             e.printStackTrace();
         }
     }

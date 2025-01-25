@@ -15,7 +15,7 @@ public class Server {
         clients = new CopyOnWriteArrayList<>();
     }
 
-    public void start(){
+    public void start() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Сервер запущен на порту: " + port);
             while (true) {
@@ -24,26 +24,27 @@ public class Server {
             }
 
         } catch (IOException e) {
+            System.err.println("Ошибка при запуске сервера: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public void subscribe(ClientHandler clientHandler){
+    public void subscribe(ClientHandler clientHandler) {
         clients.add(clientHandler);
     }
 
-    public void unsubscribe(ClientHandler clientHandler){
+    public void unsubscribe(ClientHandler clientHandler) {
         clients.remove(clientHandler);
-        broadcastMessage("Из чата вышел: "+ clientHandler.getUsername());
+        broadcastMessage("Из чата вышел: " + clientHandler.getUsername());
     }
 
-    public void broadcastMessage(String message){
+    public void broadcastMessage(String message) {
         for (ClientHandler c : clients) {
             c.sendMsg(message);
         }
     }
 
-    public void clientMessage(String message, String clientName){
+    public void clientMessage(String message, String clientName) {
         for (ClientHandler c : clients) {
             if (c.getUsername().equals(clientName)) {
                 c.sendMsg(message);

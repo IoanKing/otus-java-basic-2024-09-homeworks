@@ -33,6 +33,7 @@ public class Client {
                     }
                 }
             } catch (IOException e) {
+                System.err.println("Ошибка при обработке ввода с клавиатуры: " + e.getMessage());
                 e.printStackTrace();
             } finally {
                 disconnect();
@@ -54,6 +55,7 @@ public class Client {
                 in.close();
             }
         } catch (IOException e) {
+            System.err.println("Ошибка при отключении соединения: " + e.getMessage());
             e.printStackTrace();
         }
         try {
@@ -61,6 +63,7 @@ public class Client {
                 out.close();
             }
         } catch (IOException e) {
+            System.err.println("Ошибка при отключении соединения: " + e.getMessage());
             e.printStackTrace();
         }
         try {
@@ -68,6 +71,7 @@ public class Client {
                 socket.close();
             }
         } catch (IOException e) {
+            System.err.println("Ошибка при отключении соединения: " + e.getMessage());
             e.printStackTrace();
         }
     }
