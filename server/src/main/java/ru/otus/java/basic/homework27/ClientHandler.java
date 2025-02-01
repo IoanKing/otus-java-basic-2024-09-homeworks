@@ -1,5 +1,7 @@
 package ru.otus.java.basic.homework27;
 
+import ru.otus.java.basic.homework27.DBObjects.Role;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,7 +14,7 @@ public class ClientHandler {
     private DataOutputStream out;
 
     private String username;
-    private Roles role;
+    private String role;
 
     public ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
@@ -25,8 +27,8 @@ public class ClientHandler {
                 System.out.println("Клиент подключился на порту: " + socket.getPort());
                 //цикл аутентификации
                 while (true) {
-                    sendMsg("Для начала работы надо пройти аутентификацию. Формат команды /auth login password \n" +
-                            "или регистрацию. Формат команды /reg login password username ");
+                    sendMsg("Для начала работы надо пройти аутентификацию. Формат команды /auth userName password \n" +
+                            "или регистрацию. Формат команды /reg email password userName");
                     String message = in.readUTF();
                     if (message.startsWith("/")) {
                         if (message.equalsIgnoreCase("/exit")) {
@@ -40,9 +42,8 @@ public class ClientHandler {
                                 sendMsg("Неверный формат команды /auth");
                                 continue;
                             }
-                            if (server.UserServiceJDBC()
+                            if (server.getUserServiceJDBC()
                                     .authenticate(this, element[1], element[2])){
-
                                 break;
                             }
                         }
@@ -53,8 +54,8 @@ public class ClientHandler {
                                 sendMsg("Неверный формат команды /reg");
                                 continue;
                             }
-                            if (server.UserServiceJDBC()
-                                    .registration(this, element[1], element[2], element[3], 3)){
+                            if (server.getUserServiceJDBC()
+                                    .registration(this, element[1], element[2], element[3], "3")){
                                 break;
                             }
                         }
@@ -84,7 +85,7 @@ public class ClientHandler {
                             server.clientMessage(username + " : " + targetMessage, targetUsername);
                         }
                         if (message.startsWith("/kick")) {
-                            if (this.role.equals(Roles.ADMIN)) {
+                            if (this.role.equals("admin")) {
                                 String[] element = message.split(" ");
                                 if (element.length != 2){
                                     sendMsg("Неверный формат команды /kick");
@@ -153,7 +154,7 @@ public class ClientHandler {
         this.username = username;
     }
 
-    public void setRole(Roles role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }
