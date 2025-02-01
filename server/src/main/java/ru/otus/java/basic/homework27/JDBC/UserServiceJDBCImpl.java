@@ -44,7 +44,7 @@ public class UserServiceJDBCImpl implements UserServiceJDBC {
             """;
 
     private static final String GET_USER = """
-            select name from users where username = ?;
+            select username from users where username = ?;
             """;
 
     private final Connection connection;
@@ -87,8 +87,9 @@ public class UserServiceJDBCImpl implements UserServiceJDBC {
     @Override
     public boolean authenticate(ClientHandler clientHandler, String login, String password) {
         PreparedStatement psObj = null;
-        int userId;
+        int userId = 0;
         String role;
+        System.out.println("Аутентификация пользователя = " + login);
         if (server.isUsernameBusy(login)) {
             clientHandler.sendMsg("Указанная учетная запись уже занята");
             return false;
@@ -99,13 +100,17 @@ public class UserServiceJDBCImpl implements UserServiceJDBC {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     userId = rs.getInt(1);
-                    role = getRole(userId);
-                    clientHandler.sendMsg("/authok " + login);
-                    clientHandler.setUsername(login);
-                    clientHandler.setRole(role);
-                    server.subscribe(clientHandler);
-                    break;
+                    System.out.println("userId = " + userId);
                 }
+            }
+            if (userId != 0) {
+                System.out.println("userId = " + userId);
+                role = getRole(userId);
+                System.out.println("role = " + role);
+                clientHandler.sendMsg("/authok " + login);
+                clientHandler.setUsername(login);
+                clientHandler.setRole(role);
+                server.subscribe(clientHandler);
             }
             psObj = ps;
         } catch (SQLException e) {
@@ -121,7 +126,7 @@ public class UserServiceJDBCImpl implements UserServiceJDBC {
                 e.printStackTrace();
             }
         }
-        return true;
+        return (userId != 0) ? true : false;
     }
 
     @Override
